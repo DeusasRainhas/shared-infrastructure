@@ -1,6 +1,6 @@
 ---
 # Host-specific overrides
-hostname: "prod.abelharainha.local"
+hostname: "runner.deusasrainhas.local"
 
 storage_mounts:
   - src: "{{ nfs_storage_server }}:{{ nfs_storage_path }}"
