@@ -1,0 +1,9 @@
+---
+- name: Restart systemd-resolved
+  systemd:
+    name: systemd-resolved
+    state: restarted
+
+- name: Apply DNS changes
+  shell: resolvectl flush-caches
+  ignore_errors: true

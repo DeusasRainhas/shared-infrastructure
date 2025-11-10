@@ -1,0 +1,52 @@
+---
+- name: Common setup tasks
+  block:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Upgrade packages
+      apt:
+        upgrade: safe
+        autoremove: yes
+        autoclean: yes
+
+    - name: Install packages
+      apt:
+        name: "{{ installation_packages }}"
+        state: present
+
+    - name: Update hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Configure DNS in resolve.conf
+      template:
+        src: resolve.conf.j2
+        dest: /etc/resolv.conf
+        owner: root
+        group: root
+        mode: 0644
+        backup: yes
+
+    - name: Mount NFS file systems
+      mount:
+        src: "{{ item.src }}"
+        path: "{{ item.dest }}"
+        fstype: "{{ item.fstype }}"
+        opts: "{{ item.opts }}"
+        state: "{{ item.state }}"
+      loop: "{{ storage_mounts }}"
+      when: storage_mounts is defined
+
+    - name: Ensure QEMU Guest Agent is running
+      service:
+        name: qemu-guest-agent
+        state: started
+        enabled: yes
+
+    - name: Ensure QEMU Guest Agent is enabled
+      service:
+        name: qemu-guest-agent
+        state: enabled
+        enabled: yes

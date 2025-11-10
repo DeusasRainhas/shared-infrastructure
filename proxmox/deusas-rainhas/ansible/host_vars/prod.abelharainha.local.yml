@@ -1,0 +1,12 @@
+---
+# Host-specific overrides
+hostname: "prod.abelharainha.local"
+
+storage_mounts:
+  - src: "{{ nfs_storage_server }}:{{ nfs_storage_path }}"
+    dest: "{{ ansible_user_home }}/storage"
+    fstype: "nfs"
+    opts: "rw,defaults"
+    state: "mounted"
+
+

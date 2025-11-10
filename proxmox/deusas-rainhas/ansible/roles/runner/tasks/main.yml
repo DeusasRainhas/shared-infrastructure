@@ -1,0 +1,13 @@
+---
+- name: Github Runner installation and configuration
+
+  block:
+    - name: Execute Github Runner installer script
+      script: installer.sh
+      args:
+        executable: /bin/bash
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+        ORG_URL: "{{ github_runner_org_url }}"
+        ORG_TOKEN: "{{ github_runner_org_token }}"
+        
