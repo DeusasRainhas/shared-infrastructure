@@ -1,0 +1,6 @@
+claude_required_packages:
+  - pipx
+  - curl
+  - python3-venv
+  - python3-pip
+  

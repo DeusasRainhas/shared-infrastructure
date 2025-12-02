@@ -1,0 +1,26 @@
+- name: AI tools setup
+  block:
+    - name: Install Claude.ai dependencies
+      apt:
+        name: "{{ claude_required_packages }}"
+        state: present
+        update_cache: yes
+
+    - name: Install Claude.ai
+      become_user: "{{ ansible_user }}"
+      shell: |
+        curl -fsSL https://claude.ai/install.sh | bash
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
+      args:
+        executable: /bin/zsh
+
+    - name: Reset ssh connection to allow user group changes to affect
+      meta: reset_connection
+
+    - name: Install SuperClaude with pipx
+      become_user: "{{ ansible_user }}"
+      shell: |
+          pipx install superclaude  --force
+          "$HOME/.local/bin/superclaude" install
+      args:
+        creates: /home/{{ ansible_user }}/.superclaude/bin/superclaude

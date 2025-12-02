@@ -1,0 +1,25 @@
+---
+- name: Install tfenv (Terraform version manager)
+  become: yes
+  become_user: "{{ ansible_user }}"
+  git:
+    repo: 'https://github.com/tfutils/tfenv.git'
+    dest: "/home/{{ ansible_user }}/.tfenv"
+    version: master
+
+- name: Ensure tfenv bin is in PATH
+  lineinfile:
+    path: "/home/{{ ansible_user }}/.zshrc"
+    line: 'export PATH="$HOME/.tfenv/bin:$PATH"'
+    create: yes
+  
+- name: Install latest Terraform version using tfenv
+  become: yes
+  become_user: "{{ ansible_user }}"
+  shell: |
+    export PATH="$HOME/.tfenv/bin:$PATH"
+    tfenv install latest
+    tfenv use latest
+  args:
+    executable: /bin/bash
+    creates: "/home/{{ ansible_user }}/.tfenv/version"

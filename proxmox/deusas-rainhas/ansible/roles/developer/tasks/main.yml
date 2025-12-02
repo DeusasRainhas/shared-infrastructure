@@ -1,0 +1,15 @@
+---
+- name: Setup shell environment
+  include_tasks: shell.yml
+
+- name: Setup Node.js with NVM
+  include_tasks: nodejs.yml
+
+- name: Setup Terraform with tfenv
+  include_tasks: tfenv.yml
+
+- name: Setup Terragrunt with tgenv
+  include_tasks: tgenv.yml
+
+- name: Setup AWS CLI
+  include_tasks: aws.yml

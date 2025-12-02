@@ -1,0 +1,26 @@
+- name: Install AWS CLI
+  become: yes
+  shell: |
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+    unzip /tmp/awscliv2.zip -d /tmp
+    /tmp/aws/install
+  args:
+    creates: /usr/local/bin/aws
+
+- name: Install AWLess
+  become: yes
+  shell: |
+    curl -sL https://github.com/wallix/awless/releases/download/v0.1.11/awless-linux-amd64.tar.gz -o /tmp/awless.tar.gz
+    tar -xzf /tmp/awless.tar.gz -C /usr/local/bin
+    chmod +x /usr/local/bin/awless
+  args:
+    creates: /usr/local/bin/awless
+
+- name: Verify AWS CLI installation
+  shell: aws --version
+  register: aws_cli_version
+
+- name: Display AWS CLI version
+  debug:
+    msg: "AWS CLI version: {{ aws_cli_version.stdout }}"
+

@@ -1,0 +1,25 @@
+---
+- name: Install tgenv (Terragrunt version manager)
+  become: yes
+  become_user: "{{ ansible_user }}"
+  git:
+    repo: 'https://github.com/cunymatthieu/tgenv.git'
+    dest: "/home/{{ ansible_user }}/.tgenv"
+    version: master
+
+- name: Ensure tgenv bin is in PATH
+  lineinfile:
+    path: "/home/{{ ansible_user }}/.zshrc"
+    line: 'export PATH="$HOME/.tgenv/bin:$PATH"'
+    create: yes
+  
+- name: Install latest Terragrunt version using tgenv
+  become: yes
+  become_user: "{{ ansible_user }}"
+  shell: |
+    export PATH="$HOME/.tgenv/bin:$PATH"
+    tgenv install latest
+    tgenv use latest
+  args:
+    executable: /bin/bash
+    creates: "/home/{{ ansible_user }}/.tgenv/version"

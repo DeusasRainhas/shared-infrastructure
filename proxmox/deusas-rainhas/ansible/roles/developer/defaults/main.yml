@@ -1,0 +1,10 @@
+dependencies_developer: 
+  - zsh
+  - git
+  - fontconfig
+  - curl
+  - unzip
+  - wget
+  - zip
+  - p7zip-full
+  - gh

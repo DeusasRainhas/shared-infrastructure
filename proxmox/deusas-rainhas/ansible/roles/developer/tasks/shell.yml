@@ -1,0 +1,103 @@
+---
+- name: Developer profile setup
+  block:
+    - name: Install developer dependencies
+      apt:
+        name: "{{ dependencies_developer }}"
+        state: present
+        update_cache: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+      become: yes
+
+    - name: Install oh-my-zsh
+      become: yes
+      become_user: "{{ ansible_user }}"
+      shell: |
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+      args:
+        creates: "/home/{{ ansible_user }}/.oh-my-zsh"
+
+    - name: Set zsh as default shell for user
+      user:
+        name: "{{ ansible_user }}"
+        shell: /usr/bin/zsh
+      become: yes
+
+    - name: install starship ZSH theme
+      become: yes
+      shell: |
+        curl -sS https://starship.rs/install.sh | sh -s -- -y
+      args:
+        creates: /usr/local/bin/starship
+
+    - name: install zsh-autosuggestions plugin
+      become: yes
+      become_user: "{{ ansible_user }}"
+      git:
+        repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
+        dest: "/home/{{ ansible_user }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+        version: master
+
+    - name: install zsh-syntax-highlighting plugin
+      become: yes
+      become_user: "{{ ansible_user }}"
+      git:
+        repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
+        dest: "/home/{{ ansible_user }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+        version: master
+
+    - name: install zsh-completions plugin
+      become: yes
+      become_user: "{{ ansible_user }}"
+      git:
+        repo: 'https://github.com/zsh-users/zsh-completions.git'
+        dest: "/home/{{ ansible_user }}/.oh-my-zsh/custom/plugins/zsh-completions"
+        version: master
+
+    - name: Ensure fonts directory exists
+      become: yes
+      become_user: "{{ ansible_user }}"
+      file:
+        path: "/home/{{ ansible_user }}/.local/share/fonts"
+        state: directory
+        mode: '0755'
+
+    - name: Download MesloLGS NF fonts
+      become: yes
+      become_user: "{{ ansible_user }}"
+      get_url:
+        url: "https://github.com/romkatv/powerlevel10k-media/raw/master/{{ item.url }}"
+        dest: "/home/{{ ansible_user }}/.local/share/fonts/{{ item.name }}"
+        mode: '0644'
+        timeout: 30
+      loop:
+        - { name: "MesloLGS NF Regular.ttf", url: "MesloLGS%20NF%20Regular.ttf" }
+        - { name: "MesloLGS NF Bold.ttf", url: "MesloLGS%20NF%20Bold.ttf" }
+        - { name: "MesloLGS NF Italic.ttf", url: "MesloLGS%20NF%20Italic.ttf" }
+        - { name: "MesloLGS NF Bold Italic.ttf", url: "MesloLGS%20NF%20Bold%20Italic.ttf" }
+      retries: 3
+      delay: 5
+      register: download_result
+      until: download_result is succeeded
+
+    - name: Set up your shell to use Starship
+      become: yes
+      become_user: "{{ ansible_user }}"
+      lineinfile:
+        path: "/home/{{ ansible_user }}/.zshrc"
+        line: 'eval "$(starship init zsh)"'
+        create: yes
+        
+    - name: Set up your shell to use Starship
+      lineinfile:
+        path: "/home/{{ ansible_user }}/.zshrc"
+        line: 'SPACESHIP_TIME_12HOUR=true'
+        create: yes
+
+    - name: Refresh font cache
+      become: yes
+      shell: fc-cache -fv
+
+  tags:
+    - developer

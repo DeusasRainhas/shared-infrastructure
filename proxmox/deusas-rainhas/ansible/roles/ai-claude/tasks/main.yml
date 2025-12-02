@@ -1,0 +1,3 @@
+---
+- name: Setup Claude.ai CLI
+  include_tasks: claude.yml
