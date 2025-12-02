@@ -1,0 +1,13 @@
+- name: Setup local Github Runner Server
+  hosts: runner.deusasrainhas.local
+  become: yes
+  become_method: sudo
+  
+  vars_files:
+    - host_vars/runner.deusasrainhas.local.yml
+  
+  roles:
+    - common
+    - docker
+    - mounts
+    - github-runner

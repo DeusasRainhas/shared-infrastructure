@@ -29,24 +29,8 @@
         mode: 0644
         backup: yes
 
-    - name: Mount NFS file systems
-      mount:
-        src: "{{ item.src }}"
-        path: "{{ item.dest }}"
-        fstype: "{{ item.fstype }}"
-        opts: "{{ item.opts }}"
-        state: "{{ item.state }}"
-      loop: "{{ storage_mounts }}"
-      when: storage_mounts is defined
-
     - name: Ensure QEMU Guest Agent is running
       service:
         name: qemu-guest-agent
         state: started
-        enabled: yes
-
-    - name: Ensure QEMU Guest Agent is enabled
-      service:
-        name: qemu-guest-agent
-        state: enabled
         enabled: yes

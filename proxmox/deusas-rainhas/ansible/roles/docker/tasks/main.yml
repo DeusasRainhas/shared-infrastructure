@@ -60,6 +60,15 @@
       environment:
         DEBIAN_FRONTEND: noninteractive
 
+    - name: Install Docker SDK for Python (system package)
+      apt:
+        name: 
+          - python3-docker
+          - python3-compose
+        state: present
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
     - name: Verify docker-compose installation
       command: docker compose --version
       changed_when: false

@@ -1,0 +1,13 @@
+- name: Setup local DEV Server
+  hosts: dev.whispercare.local
+  become: yes
+  become_method: sudo
+  
+  vars_files:
+    - host_vars/dev.whispercare.local.yml
+  
+  roles:
+    - common
+    - docker
+    - mounts
+    

@@ -38,17 +38,17 @@ ansible/
 
 ## Quick Start
 
-### Generate a new SSH key for Ansible
-ssh-keygen -t ed25519 -f ~/.ssh/ssh_private_key_file_abelha_rainha -C "ansible@automation"
+### Generate a new SSH key for Ansible (OPTIONAL)
+ssh-keygen -t ed25519 -f ~/.ssh/ssh_private_key_file_deusas_rainhas -C "ansible@automation"
 
-### Set correct permissions
-chmod 600 ~/.ssh/ssh_private_key_file_abelha_rainha
-chmod 644 ~/.ssh/ssh_private_key_file_abelha_rainha.pub
+### Set correct permissions (OPTIONAL)
+chmod 600 ~/.ssh/ssh_private_key_file_deusas_rainhas
+chmod 644 ~/.ssh/ssh_private_key_file_deusas_rainhas.pub
 
-### Copy the key to the remote host
-ssh-copy-id -i ~/.ssh/ssh_private_key_file_abelha_rainha.pub @dev.abelharainha.local
-ssh-copy-id -i ~/.ssh/ssh_private_key_file_abelha_rainha.pub @prod.abelharainha.local
-ssh-copy-id -i ~/.ssh/ssh_private_key_file_abelha_rainha.pub @runner.abelharainha.local
+### Copy the key to the remote host (OPTIONAL)
+ssh-copy-id -i ~/.ssh/ssh_private_key_file_deusas_rainhas.pub @dev.deusasrainhas.local
+ssh-copy-id -i ~/.ssh/ssh_private_key_file_deusas_rainhas.pub @prod.deusasrainhas.local
+ssh-copy-id -i ~/.ssh/ssh_private_key_file_deusas_rainhas.pub @runner.deusasrainhas.local
 
 1. **Configure Inventory**: Update the inventory files with your server details
 2. **Review Variables**: Check and modify variables in `group_vars/` and `host_vars/`

@@ -1,0 +1,25 @@
+---
+- name: Docker Compose up
+  block:
+    - name: Run docker compose up in specified folders
+      shell: docker compose up -d --pull always
+      args:
+        chdir: "{{ item }}"
+      loop: "{{ docker_compose_folders }}"
+      when: docker_compose_folders is defined
+
+    - name: Get list of all containers
+      command: docker ps --format json
+      register: docker_ps_output
+      changed_when: false
+
+    - name: Parse container info
+      set_fact:
+        container_list: "{{ docker_ps_output.stdout_lines | map('from_json') | list }}"
+      when: docker_ps_output.stdout_lines is defined and docker_ps_output.stdout_lines | length > 0
+
+    - name: Display container status
+      debug:
+        msg: "Container: {{ item.Names }} | State: {{ item.State }} | Status: {{ item.Status }}"
+      loop: "{{ container_list }}"
+      when: container_list is defined and container_list | length > 0
