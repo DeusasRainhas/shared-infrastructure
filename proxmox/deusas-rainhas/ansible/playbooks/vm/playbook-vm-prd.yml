@@ -1,0 +1,12 @@
+- name: Setup local PRD Server
+  hosts: prd.whispercare.local
+  become: yes
+  become_method: sudo
+  
+  vars_files:
+    - host_vars/prd.whispercare.local.yml
+  
+  roles:
+    - common
+    - docker
+    - mounts

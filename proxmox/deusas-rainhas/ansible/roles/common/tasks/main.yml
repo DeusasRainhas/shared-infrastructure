@@ -1,0 +1,36 @@
+---
+- name: Common setup tasks
+  block:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Upgrade packages
+      apt:
+        upgrade: safe
+        autoremove: yes
+        autoclean: yes
+
+    - name: Install packages
+      apt:
+        name: "{{ installation_packages }}"
+        state: present
+
+    - name: Update hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Configure DNS in resolve.conf
+      template:
+        src: resolve.conf.j2
+        dest: /etc/resolv.conf
+        owner: root
+        group: root
+        mode: 0644
+        backup: yes
+
+    - name: Ensure QEMU Guest Agent is running
+      service:
+        name: qemu-guest-agent
+        state: started
+        enabled: yes

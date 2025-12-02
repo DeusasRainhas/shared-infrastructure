@@ -1,6 +1,6 @@
 # shared-infrastructure
 
-🏗️ Infraestrutura como código (Terraform, Docker, K8s)
+🏗️ Infraestrutura como código (Terraform)
 
 ## 🐝 Organização DeusasRainhas
 
@@ -19,7 +19,7 @@ Este repositório faz parte do ecossistema DeusasRainhas - Apicultura Inteligent
 
 ## 📚 Documentação
 
-Em breve...
+Infraestrutura coo codigo para automacoes nos servidores.
 
 ## 🤝 Contribuindo
 

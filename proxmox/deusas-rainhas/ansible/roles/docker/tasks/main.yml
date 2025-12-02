@@ -1,0 +1,74 @@
+---
+- name: Docker installation and configuration
+
+  block:
+    - name: Uninstall conflicting packages
+      apt:
+        name: "{{ conflicting_packages }}"
+        state: absent
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Install prerequisite packages
+      apt:
+        name: "{{ installation_packages }}"
+        state: present
+        update_cache: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Download docker installer script
+      get_url:
+        url: https://get.docker.com
+        dest: /tmp/get-docker.sh
+        mode: '0755'
+        validate_certs: no
+        timeout: 30
+
+    - name: Execute Docker installation script
+      shell: sh /tmp/get-docker.sh
+      args:
+        creates: /usr/bin/docker
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add current user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Reset ssh connection to allow user group changes to affect
+      meta: reset_connection
+
+    - name: Verify user can run Docker commands
+      command: docker ps
+      become: false
+      become_user: "{{ ansible_user }}"
+      changed_when: false
+
+    - name: Install docker-compose
+      apt:
+        name: "{{ docker_post_install_packages }}"
+        state: present
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Install Docker SDK for Python (system package)
+      apt:
+        name: 
+          - python3-docker
+          - python3-compose
+        state: present
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Verify docker-compose installation
+      command: docker compose --version
+      changed_when: false
