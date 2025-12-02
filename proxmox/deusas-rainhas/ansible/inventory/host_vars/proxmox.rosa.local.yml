@@ -8,7 +8,7 @@ nfs_exports:
   - "/storage/hosts/deusasrainhas/prd 192.168.70.75/32(rw,sync,no_root_squash,no_subtree_check)"
   - "#"
   - "#"
-  - "# dev.rosa.local
+  - "# dev.rosa.local"
   - "/storage/hosts/deusasrainhas/dev 192.168.70.76/32(rw,sync,no_root_squash,no_subtree_check)"
   - "#"
   - "#"
@@ -20,7 +20,7 @@ nfs_exports:
   - "/storage/hosts/deusasrainhas/stg 192.168.70.79/32(rw,sync,no_root_squash,no_subtree_check)"
   - "#"
   - "#"
-  - "# vpn.rosa.local
+  - "# vpn.rosa.local"
   - "/storage/hosts/deusasrainhas/vpn 192.168.70.6/32(rw,sync,no_root_squash,no_subtree_check)"
 
 nfs_shares:
