@@ -1,0 +1,14 @@
+---
+# DNS configuration
+dns_nameservers:
+  - "8.8.8.8"
+  - "8.8.4.4"
+  - "1.1.1.1"
+
+# System upgrade settings
+system_upgrade_type: "safe"  # Options: safe, full, dist
+auto_remove_packages: yes
+auto_clean_packages: yes
+installation_packages:
+  - nfs-kernel-server
+  

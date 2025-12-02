@@ -1,10 +1,10 @@
 - name: Setup local DNS Server
-  hosts: dns.deusasrainhas.local
+  hosts: dns.rosa.local
   become: yes
   become_method: sudo
   
   vars_files:
-    - host_vars/dns.deusasrainhas.local.yml
+    - host_vars/dns.rosa.local.yml
   
   roles:
     - common

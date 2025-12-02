@@ -1,7 +1,7 @@
 ---
 # Host-specific overrides
-hostname: "dns.deusasrainhas.local"
-nfs_storage_path: /storage/disks/deusasrainhas/dns
+hostname: "dns.rosa.local"
+nfs_storage_path: /storage/disks/rosa/dns
 nfs_mount_path: /home/{{ansible_user}}/storage
 storage_mounts:
   - src: "{{ nfs_storage_server }}:{{ nfs_storage_path }}"

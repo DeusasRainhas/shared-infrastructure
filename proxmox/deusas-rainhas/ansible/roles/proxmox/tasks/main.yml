@@ -1,0 +1,57 @@
+---
+- name: Proxmox Setup
+  block:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Upgrade packages
+      apt:
+        upgrade: safe
+        autoremove: yes
+        autoclean: yes
+
+    - name: Install NFS server packages
+      apt:
+        name:
+          - nfs-kernel-server
+          - nfs-common
+        state: present
+
+    - name: update resolve.conf for NFS
+      lineinfile:
+        path: /etc/resolv.conf
+        line: "{{ dns_nameservers }}"
+        create: yes
+        backup: yes
+
+    - name: Create Folders for NFS shares
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: 1000
+        group: 1000
+        recurse: yes
+      loop: "{{ nfs_shares }}"
+
+
+    - name: Configure NFS exports
+      lineinfile:
+        path: /etc/exports
+        line: "{{ item }}"
+        create: yes
+        backup: yes
+      loop: "{{ nfs_exports }}"
+      notify: restart nfs
+
+    - name: Start and enable NFS services
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - nfs-kernel-server
+        - rpcbind
+
+    - name: Export NFS shares
+      command: exportfs -ra
