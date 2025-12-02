@@ -1,8 +1,8 @@
 ---
 # Host-specific overrides
-hostname: "runner.deusasrainhas.local"
-nfs_storage_path: /storage/disks/deusasrainhas/runner
-nfs_mount_path: /home/ubuntu/storage
+hostname: "stg.deusasrainhas.local"
+nfs_storage_path: /storage/disks/deusasrainhas/stg
+nfs_mount_path: /home/{{ansible_user}}/storage
 storage_mounts:
   - src: "{{ nfs_storage_server }}:{{ nfs_storage_path }}"
     dest: "{{ nfs_mount_path }}"

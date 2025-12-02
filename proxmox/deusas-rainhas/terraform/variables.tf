@@ -25,7 +25,7 @@ variable "proxmox_insecure" {
 variable "proxmox_node_name" {
   description = "Name of the Proxmox node where the VM will be created"
   type        = string
-  default     = "beast"
+  default     = "proxmox"
 }
 
 variable "template_vm_id" {

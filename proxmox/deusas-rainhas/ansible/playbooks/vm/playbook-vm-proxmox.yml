@@ -1,0 +1,12 @@
+- name: Setup local STG Server
+  hosts: proxmox.rosa.local
+  become: yes
+  become_method: sudo
+  
+  vars_files:
+    - host_vars/proxmox.deusasrainhas.local.yml
+  
+  roles:
+    - common
+    - docker
+    - mounts

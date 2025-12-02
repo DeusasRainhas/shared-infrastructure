@@ -1,10 +1,10 @@
 - name: Setup local PRD Server
-  hosts: prd.whispercare.local
+  hosts: prd.deusasrainhas.local
   become: yes
   become_method: sudo
   
   vars_files:
-    - host_vars/prd.whispercare.local.yml
+    - host_vars/prd.deusasrainhas.local.yml
   
   roles:
     - common

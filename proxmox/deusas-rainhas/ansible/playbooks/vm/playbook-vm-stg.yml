@@ -1,0 +1,12 @@
+- name: Setup local STG Server
+  hosts: stg.deusasrainhas.local
+  become: yes
+  become_method: sudo
+  
+  vars_files:
+    - host_vars/stg.deusasrainhas.local.yml
+  
+  roles:
+    - common
+    - docker
+    - mounts

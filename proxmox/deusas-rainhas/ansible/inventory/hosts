@@ -1,13 +1,15 @@
 # Remote VMs (legacy)
 [deusasrainhas]
-dev.deusasrainhas.local    ansible_host=192.168.70.70
-prd.deusasrainhas.local    ansible_host=192.168.70.71
-runner.deusasrainhas.local ansible_host=192.168.70.72
-
+prd.deusasrainhas.local    ansible_host=192.168.70.75
+dev.deusasrainhas.local    ansible_host=192.168.70.76
+runner.deusasrainhas.local ansible_host=192.168.70.77
+dns.deusasrainhas.local ansible_host=192.168.70.78
+stg.deusasrainhas.local ansible_host=192.168.70.79
+proxmox.rosa.local ansible_host=192.168.70.5
 
 [deusasrainhas:vars]
-nfs_storage_server=192.168.70.10
-ansible_user=ubuntu
-ansible_user_home=/home/ubuntu
+nfs_storage_server=192.168.70.5 
+ansible_user=bruno
+ansible_user_home=/home/bruno
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-dns_nameservers=192.168.3.14
+dns_nameservers=192.168.70.8

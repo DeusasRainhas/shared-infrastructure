@@ -1,0 +1,3 @@
+---
+# Host-specific overrides
+hostname: "proxmox.rosa.local"

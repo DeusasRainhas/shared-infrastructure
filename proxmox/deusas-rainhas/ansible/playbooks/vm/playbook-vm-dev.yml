@@ -1,10 +1,10 @@
 - name: Setup local DEV Server
-  hosts: dev.whispercare.local
+  hosts: dev.deusasrainhas.local
   become: yes
   become_method: sudo
   
   vars_files:
-    - host_vars/dev.whispercare.local.yml
+    - host_vars/dev.deusasrainhas.local.yml
   
   roles:
     - common
