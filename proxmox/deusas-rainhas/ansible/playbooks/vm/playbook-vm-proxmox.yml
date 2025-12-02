@@ -1,4 +1,4 @@
-- name: Setup local STG Server
+- name: Setup local PROXMOX Server
   hosts: proxmox.rosa.local
   become: yes
   become_method: sudo
@@ -7,6 +7,4 @@
     - host_vars/proxmox.rosa.local.yml
   
   roles:
-    - common
-    - docker
-    - mounts
+    - proxmox
