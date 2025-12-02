@@ -1,0 +1,3 @@
+---
+- import_playbook: ./vm/playbook-vm-proxmox.yml
+- import_playbook: ./vm/playbook-vm-dns.yml
