@@ -12,7 +12,7 @@
         curl -fsSL https://claude.ai/install.sh | bash
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
       args:
-        executable: /bin/zsh
+        executable: /bin/bash
 
     - name: Reset ssh connection to allow user group changes to affect
       meta: reset_connection

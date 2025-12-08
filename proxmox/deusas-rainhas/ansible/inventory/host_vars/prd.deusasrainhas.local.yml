@@ -1,6 +1,6 @@
 # Host-specific overrides
 hostname: "prd.deusasrainhas.local"
-nfs_storage_path: /storage/disks/deusasrainhas/prd
+nfs_storage_path: /storage/hosts/deusasrainhas/prd
 nfs_mount_path: /home/{{ansible_user}}/storage
 storage_mounts:
   - src: "{{ nfs_storage_server }}:{{ nfs_storage_path }}"

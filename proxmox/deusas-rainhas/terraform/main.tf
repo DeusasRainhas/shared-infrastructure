@@ -82,10 +82,11 @@ output "vm_names" {
 }
 
 output "vm_ipv4_addresses" {
-  description = "Map of VM keys to their primary IPv4 addresses (requires QEMU guest agent)"
+  description = "Map of VM keys to their primary IPv4 addresses (requires QEMU guest agent and VM running)"
   value = {
     for k, v in proxmox_virtual_environment_vm.vm_from_template :
+    # Only attempt to read IP if VM is started and guest agent is available
     # ipv4_addresses[0] is loopback (127.0.0.1), [1][0] is first real interface
-    k => length(v.ipv4_addresses) > 1 ? v.ipv4_addresses[1][0] : null
+    k => (v.started && length(v.ipv4_addresses) > 1) ? v.ipv4_addresses[1][0] : null
   }
 }

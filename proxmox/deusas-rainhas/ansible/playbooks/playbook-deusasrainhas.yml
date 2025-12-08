@@ -1,5 +1,5 @@
 ---
-- import_playbook: ./vm/playbook-vm-dev.yml
 - import_playbook: ./vm/playbook-vm-prd.yml
-- import_playbook: ./vm/playbook-vm-stg.yml
-- import_playbook: ./vm/playbook-vm-runner.yml
+# - import_playbook: ./vm/playbook-vm-dev.yml
+# - import_playbook: ./vm/playbook-vm-stg.yml
+# - import_playbook: ./vm/playbook-vm-runner.yml
